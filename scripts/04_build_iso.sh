@@ -82,4 +82,4 @@ xorriso -as mkisofs \
     /EFI/efiboot.img="${ISO_TREE}/EFI/efiboot.img"
 
 echo ""
-echo "ISO built: $OUTPUT_ISO"
+echo "  ISO built: $OUTPUT_ISO"
