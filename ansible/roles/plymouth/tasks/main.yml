@@ -1,0 +1,14 @@
+---
+# ansible/roles/plymouth/tasks/main.yml
+# Set the Plymouth boot splash theme.
+
+- name: Install Plymouth breeze theme
+  apt:
+    name: plymouth-theme-breeze
+    state: present
+
+- name: Set active Plymouth theme
+  command: "plymouth-set-default-theme -R {{ plymouth_theme }}"
+
+- name: Update initramfs to apply theme
+  command: update-initramfs -u

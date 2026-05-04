@@ -1,0 +1,13 @@
+---
+# ansible/playbook.yml
+# Main playbook - applies all roles to the Kubuntu chroot.
+# Roles run in order: packages -> desktop-config -> plymouth
+
+- name: Customize Kubuntu chroot
+  hosts: custom_distro
+  become: true
+
+  roles:
+    - packages        # Install/remove apt packages
+    - desktop-config  # KDE Plasma configuration via kwriteconfig5
+    - plymouth        # Custom boot splash theme

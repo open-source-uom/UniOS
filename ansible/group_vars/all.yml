@@ -1,0 +1,29 @@
+---
+# ansible/group_vars/all.yml
+# Variables shared across all roles.
+
+distro_name: "Kubuntu Custom KDE"
+distro_version: "24.04"
+
+# Packages to install in the chroot
+extra_packages:
+  - vim
+  - htop
+  - curl
+  - git
+  - net-tools
+  - openssh-client
+  - plasma-nm          # KDE Network Manager applet
+  - kde-plasma-desktop
+
+# Packages to remove (bloat reduction)
+remove_packages:
+  - thunderbird
+#  - libreoffice-common
+
+# KDE skel config — placed in /etc/skel/.config/
+# so every new user gets these defaults on first login
+kde_skel_dir: "/etc/skel/.config"
+
+# Plymouth theme name (must be installed via packages role)
+plymouth_theme: "breeze"

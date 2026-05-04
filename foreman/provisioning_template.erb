@@ -1,0 +1,37 @@
+<%#
+  foreman/provisioning_template.erb
+  Foreman "Preseed default finish" template snippet.
+  Add this block at the END of your existing finish template
+  (Infrastructure > Provisioning Templates > Preseed default finish).
+
+  This installs Ansible and runs your KDE roles immediately
+  after the OS finishes installing and the host checks in.
+%>
+
+# Ansible post install configuration
+apt-get install -y ansible git
+
+# Clone the custom distro repo (or pull if already present)
+REPO_DIR="/opt/kubuntu-custom-distro"
+if [ -d "$REPO_DIR/.git" ]; then
+  git -C "$REPO_DIR" pull
+else
+  git clone https://github.com/YOUR_ORG/kubuntu-custom-distro.git "$REPO_DIR"
+fi
+
+# Run only the desktop config and packages roles (not the ISO build scripts)
+ansible-playbook \
+  -i "localhost," \
+  -c local \
+  -e "kde_skel_dir=/etc/skel/.config" \
+  "$REPO_DIR/ansible/playbook.yml" \
+  --tags "packages,desktop-config,plymouth"
+
+# Optional: FreeIPA domain join (Step 7 in the image plan)
+# Uncomment when we have the FreeIPA server details
+# ipa-client-install \
+#   --domain=ipa.example.com \
+#   --server=ipa.example.com \
+#   --principal=admin \
+#   --password=<%= @host.params['ipa_password'] %> \
+#   --unattended

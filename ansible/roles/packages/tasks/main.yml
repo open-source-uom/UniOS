@@ -1,0 +1,20 @@
+---
+# ansible/roles/packages/tasks/main.yml
+# Install and remove apt packages inside the chroot.
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install extra packages
+  apt:
+    name: "{{ extra_packages }}"
+    state: present
+
+- name: Remove unwanted packages
+  apt:
+    name: "{{ remove_packages }}"
+    state: absent
+    purge: yes
+    autoremove: yes

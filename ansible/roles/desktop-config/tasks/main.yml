@@ -1,0 +1,61 @@
+---
+# ansible/roles/desktop-config/tasks/main.yml
+# Configure KDE Plasma defaults using kwriteconfig5.
+# All files land in /etc/skel/.config/ so every new user
+# inherits these settings on first login.
+
+- name: Ensure skel .config directory exists
+  file:
+    path: "{{ kde_skel_dir }}"
+    state: directory
+    mode: "0755"
+
+# Global KDE settings (kdeglobals)
+- name: Set KDE color scheme to BreezeDark
+  command: >
+    kwriteconfig5
+    --file {{ kde_skel_dir }}/kdeglobals
+    --group General
+    --key ColorScheme
+    BreezeDark
+
+- name: Set KDE widget style to Breeze
+  command: >
+    kwriteconfig5
+    --file {{ kde_skel_dir }}/kdeglobals
+    --group General
+    --key widgetStyle
+    Breeze
+
+# Taskbar / Panel
+- name: Ensure plasma-org.kde.plasma.desktop-appletsrc directory
+  file:
+    path: "{{ kde_skel_dir }}"
+    state: directory
+
+# Keyboard shortcuts
+- name: Set custom application launcher shortcut (Super key)
+  command: >
+    kwriteconfig5
+    --file {{ kde_skel_dir }}/kglobalshortcutsrc
+    --group plasmashell
+    --key "activate application launcher"
+    "Meta+F1,Meta+F1,Activate Application Launcher"
+
+# Display / Screen
+- name: Set display scale to 1 (100%) — safe default for VMs
+  command: >
+    kwriteconfig5
+    --file {{ kde_skel_dir }}/kdeglobals
+    --group KScreen
+    --key ScaleFactor
+    1
+
+# Notifications
+- name: Disable low battery notifications
+  command: >
+    kwriteconfig5
+    --file {{ kde_skel_dir }}/plasmanotifyrc
+    --group Applications
+    --key powerdevil
+    false
