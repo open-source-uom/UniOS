@@ -1,7 +1,4 @@
+build/ 
 iso_base/
-build/
 output/
-*.iso
-*.qcow2
-__pycache__/
-*.pyc
+dev_disk.qcow2
