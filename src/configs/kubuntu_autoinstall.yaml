@@ -1,0 +1,20 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  ssh:
+    install-server: true
+    allow-pw: true
+  identity:
+    hostname: kubuntu-custom
+    password: "$6$exH2O.lZgE.Nf49q$Q8u4t2zG2H/r6A.1tFvK0W1L7k8V.U2x/8S2G/7I1X6A.rV1D.1E8o.F/uK2V/xX.1/U2X/8S2G/7I1X6A.rV." # Password is 'ubuntu'
+    realname: Custom User
+    username: ubuntu
+  # This is where the magic happens: Installing the KDE Plasma Desktop
+  packages:
+    - kubuntu-desktop
+  # Optional: Tell the system to boot into the graphical target
+  late-commands:
+    - curtin in-target --target=/target -- systemctl set-default graphical.target
