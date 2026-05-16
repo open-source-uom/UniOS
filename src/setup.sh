@@ -69,6 +69,11 @@ apt install -y ../resources/unidesk_1.0-1_all.deb
 # 11b. Install unibackpack
 apt install -y ../resources/unibackpack_1.0_amd64.deb
 
+# Adding our PPA (unios-core-stable) in the ISO
+cat > /etc/apt/sources.list.d/unios.list << 'EOF'
+deb [trusted=yes] https://ppa.launchpadcontent.net/unios-team/unios-core-stable/ubuntu resolute main
+EOF
+
 # 11c. Add UniBackpack shortcut to desktop
 cat > /etc/skel/Desktop/unibackpack.desktop << 'EOF'
 [Desktop Entry]
