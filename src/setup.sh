@@ -61,6 +61,17 @@ autoload=false
 EOF
 cp /etc/skel/.config/kded_plasma_welcomerc /etc/skel/.config/default/
 
+# ADDING THE PPA
+cat > /etc/apt/sources.list.d/unios.list << 'EOF'
+deb http://ppa.launchpad.net/unios-team/ppa/ubuntu noble main
+EOF
+
+# Update repositories using the new correct PPA link
+apt update
+
+# 11d. Install our fresh unios-desktop-settings package from the live PPA!
+apt install -y unios-desktop-settings
+
 # 10. Remove plasma-welcome package entirely
 apt remove --purge -y plasma-welcome
 apt autoremove --purge -y
