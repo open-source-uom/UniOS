@@ -1,4 +1,4 @@
-# Ensure script is run from the correct directory
+# 0. Ensure script is run from the correct directory
 cd "$(dirname "$0")" || exit 1
 
 # 1. Copy wallpaper
@@ -109,10 +109,16 @@ Categories=Utility;
 EOF
 chmod +x /etc/skel/Desktop/unibackpack.desktop
 
-# 18. Add UniOS PPA for future updates
+# 18. Add UniOS PPA and install desktop settings
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1607DC0CE88E5632F345ECD73946FECCB0BACE79
+
 cat > /etc/apt/sources.list.d/unios.list << 'EOF'
-deb [trusted=yes] https://ppa.launchpadcontent.net/unios-team/unios-core-stable/ubuntu noble main
+deb https://ppa.launchpadcontent.net/unios-team/ppa/ubuntu noble main
 EOF
+
+# Uncomment lines when ready
+#apt update
+#apt install -y unios-desktop-settings
 
 # 19. Verify everything
 echo "=== Wallpaper ===" && ls /usr/share/wallpapers/MyWallpaper/contents/images/
