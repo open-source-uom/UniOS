@@ -1,3 +1,5 @@
+# Ensure script is run from the correct directory
+cd "$(dirname "$0")" || exit 1
 # 1. Copy wallpaper (drag unios.jpg onto Cubic first, then:)
 mkdir -p /usr/share/wallpapers/MyWallpaper/contents/images
 cp ../resources/unios.jpg /usr/share/wallpapers/MyWallpaper/contents/images/unios.jpg
