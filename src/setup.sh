@@ -110,7 +110,8 @@ EOF
 chmod +x /etc/skel/Desktop/unibackpack.desktop
 
 # 18. Add UniOS PPA and install desktop settings
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1607DC0CE88E5632F345ECD73946FECCB0BACE79
+curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x1607DC0CE88E5632F345ECD73946FECCB0BACE79" \
+  | gpg --dearmor -o /etc/apt/trusted.gpg.d/unios-ppa.gpg
 
 cat > /etc/apt/sources.list.d/unios.list << 'EOF'
 deb https://ppa.launchpadcontent.net/unios-team/ppa/ubuntu noble main
